@@ -1,0 +1,19 @@
+name: Build VST3
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -B build -A x64
+      - name: Build
+        run: cmake --build build --config Release --target Gazyava_VST3 Gazyava_Standalone
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Gazyava-Windows
+          path: |
+            build/Gazyava_artefacts/Release/VST3/Gazyava.vst3
+            build/Gazyava_artefacts/Release/Standalone/Gazyava.exe
